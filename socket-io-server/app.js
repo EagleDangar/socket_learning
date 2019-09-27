@@ -36,8 +36,11 @@ var option = {
 };
 
 let interval;
+// app.listen(4002, () => {
+//   console.log(`started web process at Port :`);
+// });
 
-app.use("/", index(app.io));
+// app.use("/", index(app.io));
 
 app.io.on("connection", socket => {
   if (interval) {
@@ -84,7 +87,8 @@ app.io.on("connection", socket => {
                 ],
                 function(err, sumsofsim) {
                   if (err) console.log(err);
-
+                  let chang_flag;
+                  let count = 0;
                   sumsofsim.toArray().then(simsCount => {
                     simsCount.forEach(sims => {
                       console.log(
@@ -94,7 +98,7 @@ app.io.on("connection", socket => {
                         sims.sum
                       );
                       percentage_done =
-                        ((sims.sum / 10000) * 100).toFixed(2) + " %";
+                        Number(((sims.sum / 10000) * 100).toFixed(2));
                       console.log(percentage_done + "  Done");
 
                       socket.emit(
@@ -129,7 +133,7 @@ app.io.on("connection", socket => {
                     status = progress_deal.status;
                   }
                   else{
-                    status = 101;
+                    status = 35;
                   }
                   console.log(` Deal Name :- ${deal_out_name} Status :- ${status} `);
                   socket.emit(
@@ -160,7 +164,7 @@ app.io.on("connection", socket => {
                     status = progress_accum.status;
                   }
                   else{
-                    status = 101;
+                    status = 35;
                   }
                   console.log(` Status :- ${status} `);
                   socket.emit(
